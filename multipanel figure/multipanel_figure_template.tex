@@ -1,0 +1,108 @@
+\documentclass{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[latin1]{inputenc}
+\usepackage[absolute]{textpos}
+\usepackage{graphicx, rotating, calc}
+\usepackage{helvet}\renewcommand{\familydefault}{\sfdefault}\fontfamily{phv}\selectfont
+\pagestyle{empty}\setlength{\parindent}{0pt}\raggedright
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% define parameters
+\newlength{\panelWidth} \newlength{\panelHeight}
+\newlength{\panelNumberXshift} \newlength{\panelNumberYshift}
+\newlength{\panelTitleXshift} \newlength{\panelTitleYshift}
+\newlength{\picXshift} \newlength{\picYshift}
+\newlength{\txtXshift} \newlength{\txtYshift}
+\newlength{\picWidth}
+\newlength{\xLabXshift} \newlength{\xLabYshift}
+\newlength{\yLabXshift} \newlength{\yLabYshift}
+\newlength{\rowTitleXshift} \newlength{\rowTitleYshift}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CHANGE PARAMETERS VALUES IN THIS SECTION
+% numbers of rows and cols
+% for number of cols/rows please use 1.0, 2.0, 3.0, etc. because LaTeX needs x.0 for numeric operations
+\newcommand{\nRows}{2.05}
+\newcommand{\nCols}{4.05}
+% size of a single panel
+\setlength{\panelWidth}{8cm}
+\setlength{\panelHeight}{7cm}
+
+% panel number (A, B, C, ...)
+\setlength{\panelNumberXshift}{0.1cm}
+\setlength{\panelNumberYshift}{0.1cm}
+
+% panel title
+\setlength{\panelTitleXshift}{0.35\panelWidth}
+\setlength{\panelTitleYshift}{0.1cm}
+
+\setlength{\rowTitleXshift}{0.1cm}
+\setlength{\rowTitleYshift}{0.3\panelHeight}
+
+% axes labels
+\setlength{\xLabXshift}{3.7cm}
+\setlength{\xLabYshift}{6.7cm}
+\setlength{\yLabXshift}{0.5cm}
+\setlength{\yLabYshift}{2.5cm}
+
+% text shift from the upper left corner of the panel
+\setlength{\txtXshift}{0cm}%{3.0cm}
+\setlength{\txtYshift}{0cm}%{0.2cm}
+
+% graphics shift from the upper left corner of the panel
+\setlength{\picXshift}{0.8cm}
+\setlength{\picYshift}{0.7cm}
+% graphics are scaled to the width
+\setlength{\picWidth}{7.5cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% setup page size by number of cols/rows and the panel size
+\usepackage[paperwidth=\nCols\panelWidth, paperheight=\nRows\panelHeight, left=0mm, right=0mm, top=0mm, bottom=0mm]{geometry}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% draw text to absolute coordinates
+\newcommand{\txt}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\txtXshift,#2\panelHeight+\txtYshift){#3}\end{textblock*}}
+% draw label
+\newcommand{\panelNumber}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\panelNumberXshift,#2\panelHeight+\panelNumberYshift)\textbf{\LARGE #3}\end{textblock*}}
+% draw title: \panelTitle{x}{y}{text}
+\newcommand{\panelTitle}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\panelTitleXshift,#2\panelHeight+\panelTitleYshift)\textbf{\large #3}\end{textblock*}}
+% draw row title: \rowTitle{y}{text}
+\newcommand{\rowTitle}[2]{\begin{textblock*}{\panelWidth}(\rowTitleXshift,#1\panelHeight+\rowTitleYshift){\rotatebox{90}{\textbf{\large #2}}}\end{textblock*}}
+
+% x-Axis label
+\newcommand{\xLab}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\xLabXshift,#2\panelHeight+\xLabYshift){\large #3}\end{textblock*}}
+% y-Axis label
+\newcommand{\yLab}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\yLabXshift,#2\panelHeight+\yLabYshift){\rotatebox{90}{\large #3}}\end{textblock*}}
+
+% draw graphics: 
+% \pic{x}{y}{basename of a pdf file}
+\newcommand{\pic}[3]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\picXshift,#2\panelHeight+\picYshift)\IfFileExists{#3.pdf}{\includegraphics[width=\picWidth]{{#3}.pdf}}{}\end{textblock*}}
+% \widepic{x}{y}{basename of a pdf file}{picture width}
+\newcommand{\widepic}[4]{\begin{textblock*}{\panelWidth}(#1\panelWidth+\picXshift,#2\panelHeight+\picYshift)\IfFileExists{#3.pdf}{\includegraphics[width=#4]{{#3}.pdf}}{}\end{textblock*}}
+
+% draw labelled subfigure
+\newcommand{\fig}[5]{ \panelNumber{#1}{#2}{#3} \pic{#1}{#2}{#4} \panelTitle{#1}{#2}{#5} }
+\newcommand{\figVarWidth}[6]{ \panelNumber{#1}{#2}{#3} \widepic{#1}{#2}{#4}{#6} \panelTitle{#1}{#2}{#5} }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+% use \panelNumber{x}{y}{label} for labels
+% use \txt{x}{y}{label} for text
+% use \pic{x}{y}{path} for pictures
+% use \fig{x}{y}{label}{path}{text} for complete figures
+
+%\fig{0.0}{0.0}{}{CIS_PViewNoFilter_OpenSWATH_r1}{}
+%\fig{1.0}{0.0}{}{CIS_PViewNoFilter_Skyline_r1}{}
+%\fig{2.0}{0.0}{}{CIS_PViewNoFilter_Spectronaut_r1}{}
+%\fig{3.0}{0.0}{}{CIS_PViewNoFilter_DIAumpire_r1}{}
+%\fig{0.0}{1.0}{}{CIS_PeakView_OpenSWATH_r2}{}
+%\fig{1.0}{1.0}{}{CIS_PeakView_Skyline_r2}{}
+%\fig{2.0}{1.0}{}{CIS_PeakView_Spectronaut_r2}{}
+%
+%\rowTitle{0.0}{Iteration 1}
+%\rowTitle{1.0}{Iteration 2}
+
+% \panelNumber{0.0}{0.0}{A}
+% \panelNumber{0.0}{1.0}{B}
+
+\end{document}
